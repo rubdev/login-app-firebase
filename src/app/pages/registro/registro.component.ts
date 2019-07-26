@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 export class RegistroComponent implements OnInit {
 
   usuario: UsuarioModel;
+  recordarUsuario = false;
 
   constructor( private auth: AuthService, private router: Router ) { }
 
@@ -35,6 +36,9 @@ export class RegistroComponent implements OnInit {
              .subscribe( respuestaFirebase => {
                 console.log(respuestaFirebase);
                 Swal.close();
+                if ( this.recordarUsuario ) {
+                  localStorage.setItem( 'email', this.usuario.email );
+                }
                 this.router.navigateByUrl( '/home' );
              },
              ( err ) => {
