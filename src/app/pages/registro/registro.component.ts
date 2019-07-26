@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsuarioModel } from 'src/app/models/usuario.model';
 import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-registro',
@@ -20,6 +21,12 @@ export class RegistroComponent implements OnInit {
 
   onSubmit( formulario: NgForm ) {
     if ( formulario.invalid ) { return; }
+    Swal.fire({
+      allowOutsideClick: false,
+      type: 'info',
+      text: 'Cargando...'
+    });
+    Swal.showLoading();
     // console.log('Formulario enviado');
     // console.log(`Datos introducidos: ${ JSON.stringify( this.usuario ) }`);
     // console.log(formulario);
@@ -29,6 +36,12 @@ export class RegistroComponent implements OnInit {
              },
              ( err ) => {
                console.log(`Error al registrar usuario: ${ err.error.error.message }`);
+               Swal.fire({
+                allowOutsideClick: false,
+                type: 'error',
+                title: 'Error al registrase',
+                text: err.error.error.message
+              });
              });
   }
 
