@@ -3,6 +3,7 @@ import { UsuarioModel } from 'src/app/models/usuario.model';
 import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registro',
@@ -13,7 +14,7 @@ export class RegistroComponent implements OnInit {
 
   usuario: UsuarioModel;
 
-  constructor( private auth: AuthService ) { }
+  constructor( private auth: AuthService, private router: Router ) { }
 
   ngOnInit() {
     this.usuario = new UsuarioModel();
@@ -33,6 +34,8 @@ export class RegistroComponent implements OnInit {
     this.auth.registrarUsuario( this.usuario )
              .subscribe( respuestaFirebase => {
                 console.log(respuestaFirebase);
+                Swal.close();
+                this.router.navigateByUrl( '/home' );
              },
              ( err ) => {
                console.log(`Error al registrar usuario: ${ err.error.error.message }`);
