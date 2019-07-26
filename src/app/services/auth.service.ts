@@ -16,7 +16,12 @@ export class AuthService {
   constructor( private http: HttpClient ) { }
 
   registrarUsuario( usuario: UsuarioModel ) {
-
+    const datos = {
+      email: usuario.email,
+      password: usuario.password,
+      returnSecureToken: true
+    };
+    return this.http.post(`${ this.url }signUp?key=${ this.apiKey }`, datos);
   }
 
   logIn( usuario: UsuarioModel ) {
