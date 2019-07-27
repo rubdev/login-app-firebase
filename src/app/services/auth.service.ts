@@ -53,7 +53,6 @@ export class AuthService {
   }
 
   logOut() {
-
   }
 
   private guardarToken( tokenId: string ) {
@@ -68,6 +67,10 @@ export class AuthService {
       this.tokenUsuario = '';
     }
     return this.tokenUsuario;
+  }
+
+  estaLogeado(): boolean {
+    return this.tokenUsuario.length > 2;
   }
 
 }
