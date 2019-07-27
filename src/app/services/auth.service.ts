@@ -53,6 +53,7 @@ export class AuthService {
   }
 
   logOut() {
+    localStorage.removeItem( 'token' );
   }
 
   private guardarToken( tokenId: string ) {
