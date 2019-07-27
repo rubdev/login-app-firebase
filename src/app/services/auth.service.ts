@@ -58,11 +58,14 @@ export class AuthService {
 
   private guardarToken( tokenId: string ) {
     this.tokenUsuario = tokenId;
-    localStorage.setItem('token', this.tokenUsuario);
+    localStorage.setItem( 'token', this.tokenUsuario );
+    let hoy = new Date();
+    hoy.setSeconds( 3600 );
+    localStorage.setItem( 'tokenExpira', hoy.getTime.toString() )
   }
 
   private leerToken() {
-    if ( localStorage.getItem( 'token ') ) {
+    if ( localStorage.getItem( 'token ' ) ) {
       this.tokenUsuario = localStorage.getItem( 'token' );
     } else {
       this.tokenUsuario = '';
@@ -71,7 +74,17 @@ export class AuthService {
   }
 
   estaLogeado(): boolean {
-    return this.tokenUsuario.length > 2;
+    if ( this.tokenUsuario.length > 2 ) {
+      return false;
+    }
+    const expira = Number ( localStorage.getItem( 'tokenExpira' ) );
+    const fechaExpira = new Date();
+    fechaExpira.setTime( expira );
+    if ( fechaExpira > new Date() ) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }
